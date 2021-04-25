@@ -15,6 +15,8 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+app.use(express.json());
+
 app.use('/api/v1/bootcamps', bootcamps);
 
 const server = app.listen(
