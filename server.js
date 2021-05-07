@@ -4,10 +4,11 @@ const morgan = require('morgan');
 const colors = require('colors');
 const errorHandler = require('./middleware/error');
 
+dotenv.config({ path: './config/config.env' });
+
 const connectDB = require('./config/db');
 const bootcamps = require('./routes/bootcamps');
 
-dotenv.config({ path: './config/config.env' });
 connectDB();
 const app = express();
 const PORT = process.env.PORT || 5000;
