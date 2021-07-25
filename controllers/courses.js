@@ -56,3 +56,21 @@ exports.addCourse = asyncHandler(async (req, res) => {
     data: course
   });
 });
+
+exports.updateCourse = asyncHandler(async (req, res) => {
+  let course = await Course.findById(req.params.id);
+
+  if (!course) {
+    return next(new ErrorResponse(`No course found with the id of ${req.params.bootcampId}`), 404);
+  }
+
+  course = await Course.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true
+  });
+
+  res.status(200).json({
+    success: true,
+    data: course
+  });
+});
