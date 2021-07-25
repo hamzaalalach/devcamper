@@ -74,3 +74,18 @@ exports.updateCourse = asyncHandler(async (req, res) => {
     data: course
   });
 });
+
+exports.deleteCourse = asyncHandler(async (req, res) => {
+  const course = await Course.findById(req.params.id);
+
+  if (!course) {
+    return next(new ErrorResponse(`No course found with the id of ${req.params.bootcampId}`), 404);
+  }
+
+  await course.remove();
+
+  res.status(200).json({
+    success: true,
+    data: {}
+  });
+});
