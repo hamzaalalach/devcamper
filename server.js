@@ -4,6 +4,8 @@ const path = require('path');
 const morgan = require('morgan');
 const colors = require('colors');
 const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
+const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
 const fileupload = require('express-fileupload');
 const errorHandler = require('./middleware/error');
@@ -24,7 +26,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(fileupload());
+app.use(helmet());
 app.use(mongoSanitize());
+app.use(xss());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/v1/bootcamps', require('./routes/bootcamps'));
 app.use('/api/v1/courses', require('./routes/courses'));
