@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
 const morgan = require('morgan');
+// eslint-disable-next-line no-unused-vars
 const colors = require('colors');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
@@ -22,7 +23,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const limiter = rateLimit({
   windowMs: 10 * 60 * 1000,
-  max: 100
+  max: 100,
 });
 
 app.use(express.json());
@@ -45,14 +46,18 @@ app.use('/api/v1/courses', require('./routes/courses'));
 app.use('/api/v1/auth', require('./routes/auth'));
 app.use('/api/v1/users', require('./routes/users'));
 app.use('/api/v1/reviews', require('./routes/reviews'));
+
 app.use(errorHandler);
 
 const server = app.listen(
   PORT,
-  console.log(`Server is running in ${process.env.NODE_ENV} on port ${process.env.PORT}`.yellow.bold)
+  console.log(
+    `Server is running in ${process.env.NODE_ENV} on port ${process.env.PORT}`
+      .yellow.bold
+  )
 );
 
-process.on('unhandledRejection', (err, promise) => {
+process.on('unhandledRejection', (err) => {
   console.log(`Error: ${err.message}`.red);
 
   server.close(() => process.exit(1));
