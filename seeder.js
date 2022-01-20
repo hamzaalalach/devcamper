@@ -1,5 +1,6 @@
 const fs = require('fs');
 const mongoose = require('mongoose');
+const path = require('path');
 // eslint-disable-next-line no-unused-vars
 const colors = require('colors');
 const dotenv = require('dotenv');
@@ -19,16 +20,16 @@ mongoose.connect(process.env.MONGO_URI, {
 });
 
 const bootcamps = JSON.parse(
-  fs.readFileSync(`${__dirname}/_data/bootcamps.json`, 'utf-8')
+  fs.readFileSync(path.join(__dirname, '_data/bootcamps.json'), 'utf-8')
 );
 const courses = JSON.parse(
-  fs.readFileSync(`${__dirname}/_data/courses.json`, 'utf-8')
+  fs.readFileSync(path.join(__dirname, '_data/courses.json'), 'utf-8')
 );
 const users = JSON.parse(
-  fs.readFileSync(`${__dirname}/_data/users.json`, 'utf-8')
+  fs.readFileSync(path.join(__dirname, '_data/users.json'), 'utf-8')
 );
 const reviews = JSON.parse(
-  fs.readFileSync(`${__dirname}/_data/reviews.json`, 'utf-8')
+  fs.readFileSync(path.join(__dirname, '_data/reviews.json'), 'utf-8')
 );
 
 const importData = async () => {
