@@ -13,10 +13,9 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const fileupload = require('express-fileupload');
 const errorHandler = require('./middleware/error');
-
 dotenv.config({ path: './config/config.env' });
 
-const connectDB = require('./config/db');
+const { connectDB, closeDB } = require('./config/db');
 
 connectDB();
 const app = express();
@@ -57,8 +56,16 @@ const server = app.listen(
   )
 );
 
+const closeGracefully = () => {
+  closeDB();
+  server.close(() => process.exit(0));
+}
+
+
 process.on('unhandledRejection', (err) => {
   console.log(`Error: ${err.message}`.red);
 
   server.close(() => process.exit(1));
 });
+process.on('SIGINT', closeGracefully);
+process.on('SIGTERM', closeGracefully);
