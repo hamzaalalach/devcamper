@@ -11,8 +11,9 @@ const Bootcamp = require('./models/Bootcamp');
 const Course = require('./models/Course');
 const User = require('./models/User');
 const Review = require('./models/Review');
+const { MONGO_URI } = require('./config');
 
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,

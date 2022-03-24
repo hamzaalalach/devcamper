@@ -3,6 +3,7 @@ const ErrorResponse = require('../utils/errorResponse');
 const Bootcamp = require('../models/Bootcamp');
 const asyncHandler = require('../middleware/async');
 const geocoder = require('../utils/geocoder');
+const { uploader } = require('../config');
 
 exports.getBootcamps = asyncHandler(async (req, res) => {
   res.status(200).json(res.advancedResults);
@@ -150,17 +151,17 @@ exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse('Please upload an image file', 400));
   }
 
-  if (file.size > process.env.FILE_UPLOAD_LIMIT) {
+  if (file.size > uploader.FILE_UPLOAD_LIMIT) {
     return next(
       new ErrorResponse(
-        `Please upload an image less than ${process.env.FILE_UPLOAD_LIMIT}`,
+        `Please upload an image less than ${uploader.FILE_UPLOAD_LIMIT}`,
         400
       )
     );
   }
 
   file.name = `photo_${bootcamp._id}${path.parse(file.name).ext}`;
-  file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (error) => {
+  file.mv(`${uploader.FILE_UPLOAD_PATH}/${file.name}`, async (error) => {
     if (error) {
       console.error(error);
       return next(new ErrorResponse('Error with file upload', 500));

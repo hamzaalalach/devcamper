@@ -13,13 +13,13 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const fileupload = require('express-fileupload');
 const errorHandler = require('./middleware/error');
-dotenv.config({ path: './config/config.env' });
+dotenv.config();
 
 const { connectDB, closeDB } = require('./config/db');
+const { PORT, NODE_ENV } = require('./config');
 
 connectDB();
 const app = express();
-const PORT = process.env.PORT || 5000;
 const limiter = rateLimit({
   windowMs: 10 * 60 * 1000,
   max: 100,
@@ -28,7 +28,7 @@ const limiter = rateLimit({
 app.use(express.json());
 app.use(cookieParser());
 
-if (process.env.NODE_ENV === 'development') {
+if (NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
@@ -51,16 +51,14 @@ app.use(errorHandler);
 const server = app.listen(
   PORT,
   console.log(
-    `Server is running in ${process.env.NODE_ENV} on port ${process.env.PORT}`
-      .yellow.bold
+    `Server is running in ${NODE_ENV} on port ${process.env.PORT}`.yellow.bold
   )
 );
 
 const closeGracefully = () => {
   closeDB();
   server.close(() => process.exit(0));
-}
-
+};
 
 process.on('unhandledRejection', (err) => {
   console.log(`Error: ${err.message}`.red);

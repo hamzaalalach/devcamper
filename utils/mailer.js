@@ -1,17 +1,18 @@
 const nodemailer = require('nodemailer');
+const { mailer } = require('../config');
 
 const sendEmail = async (options) => {
   const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
+    host: mailer.SMTP_HOST,
+    port: mailer.SMTP_PORT,
     auth: {
-      user: process.env.SMTP_EMAIL,
-      pass: process.env.SMTP_PASSWORD,
+      user: mailer.SMTP_EMAIL,
+      pass: mailer.SMTP_PASSWORD,
     },
   });
 
   const email = {
-    from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`,
+    from: `${mailer.FROM_NAME} <${mailer.FROM_EMAIL}>`,
     to: options.email,
     subject: options.subject,
     text: options.message,
