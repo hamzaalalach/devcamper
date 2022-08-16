@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "outDir": "dist",
+    "sourceMap": true,
+    "strict": true,
+    "target": "ESNext",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "lib": [
+      "esnext.asynciterable"
+    ],
+    "resolveJsonModule": true
+  },
+  "compileOnSave": true,
+  "include": [
+    "src",
+  ],
+  "exclude": [
+    "node_modules/*"
+  ],
+}
